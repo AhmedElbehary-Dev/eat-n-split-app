@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialFriends = [
   {
     id: 118836,
@@ -19,10 +21,31 @@ const initialFriends = [
   },
 ];
 
+//reusable component
+function Button({ children, onClick }) {
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
 export default function App() {
+  const [showAddFriendForm, setShowAddFriendForm] = useState(false);
+
+  const toggleAddFriendForm = () => {
+    setShowAddFriendForm((prevState) => !prevState);
+  };
+
   return (
     <div className="app">
-      <FriendList />
+      <div className="sidebar">
+        <FriendList />
+        {showAddFriendForm && <FormAddFriend />}
+        <Button onClick={toggleAddFriendForm}>
+          {showAddFriendForm ? "close" : "Add Friend"}
+        </Button>
+      </div>
       <FormSplitBill />
     </div>
   );
@@ -31,15 +54,11 @@ export default function App() {
 function FriendList() {
   const friends = initialFriends;
   return (
-    <div className="sidebar">
-      <ul>
-        {friends.map((friend) => (
-          <Friend key={friend.id} friend={friend} />
-        ))}
-      </ul>
-      <FormAddFriend />
-      <Button>Add Friend</Button>
-    </div>
+    <ul>
+      {friends.map((friend) => (
+        <Friend key={friend.id} friend={friend} />
+      ))}
+    </ul>
   );
 }
 
@@ -64,10 +83,6 @@ function Friend({ friend }) {
       </li>
     </div>
   );
-}
-
-function Button({ children }) {
-  return <button className="button">{children}</button>;
 }
 
 function FormAddFriend() {
