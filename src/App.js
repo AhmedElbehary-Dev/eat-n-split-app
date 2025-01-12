@@ -4,7 +4,6 @@ import Button from "./Components/Button";
 import FriendList from "./Components/FriendList";
 import FormAddFriend from "./Components/AddFriendForm";
 import FormSplitBill from "./Components/SplitBillForm";
-//reusable component
 
 export default function App() {
   const [showAddFriendForm, setShowAddFriendForm] = useState(false);
